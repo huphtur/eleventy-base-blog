@@ -5,11 +5,18 @@ const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginNavigation = require("@11ty/eleventy-navigation");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
+const pluginEmbedTweet = require("eleventy-plugin-embed-tweet");
 
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
   eleventyConfig.addPlugin(pluginNavigation);
+
+  let tweetEmbedOptions = {
+    autoEmbed: true       // default: false
+  }
+
+  eleventyConfig.addPlugin(pluginEmbedTweet, tweetEmbedOptions);
 
   eleventyConfig.setDataDeepMerge(true);
 
@@ -69,7 +76,7 @@ module.exports = function(eleventyConfig) {
   let markdownLibrary = markdownIt({
     html: true,
     breaks: true,
-    linkify: true
+    linkify: false
   }).use(markdownItAnchor, {
     permalink: true,
     permalinkClass: "direct-link",
